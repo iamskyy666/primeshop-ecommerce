@@ -1,6 +1,6 @@
 # React-Bootstrap Explained in Detail
 
-Since you're learning MERN and React, React-Bootstrap is one of the easiest ways to build professional-looking UIs quickly without writing large amounts of CSS.
+Since we're learning MERN and React, React-Bootstrap is one of the easiest ways to build professional-looking UIs quickly without writing large amounts of CSS.
 
 ---
 
