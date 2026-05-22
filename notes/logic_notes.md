@@ -913,7 +913,7 @@ That's the main power of React Router.
 
 # Most Important Things to Master First
 
-For your MERN e-commerce project, focus on these in order:
+For our MERN e-commerce project, we'll focus on these in order:
 
 1. `BrowserRouter`
 2. `Routes`
@@ -926,4 +926,4 @@ For your MERN e-commerce project, focus on these in order:
 9. `useSearchParams`
 10. `Outlet`
 
-Once these ten concepts are comfortable, you'll understand almost everything commonly used from **react-router-dom v6.10.0** in real-world MERN applications.
+Once these ten concepts are comfortable, we'll understand almost everything commonly used from **react-router-dom v6.10.0** in real-world MERN applications.
