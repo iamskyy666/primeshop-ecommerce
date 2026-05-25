@@ -20,10 +20,15 @@ import store from "./store";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      <Route index={true} path="/" element={<HomeScreen />} />
+      <Route index element={<HomeScreen />} />
       <Route path="/product/:id" element={<ProductScreen />} />
     </Route>,
   ),
+  {
+    future: {
+      v7_startTransition: true,
+    },
+  },
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
