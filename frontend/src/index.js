@@ -24,11 +24,6 @@ const router = createBrowserRouter(
       <Route path="/product/:id" element={<ProductScreen />} />
     </Route>,
   ),
-  {
-    future: {
-      v7_startTransition: true,
-    },
-  },
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -36,7 +31,12 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       {/* <App /> */}
-      <RouterProvider router={router} />
+      <RouterProvider
+        future={{
+          v7_startTransition: true,
+        }}
+        router={router}
+      />
     </Provider>
   </React.StrictMode>,
 );
