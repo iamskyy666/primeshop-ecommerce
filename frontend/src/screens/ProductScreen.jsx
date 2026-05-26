@@ -31,7 +31,7 @@ const ProductScreen = () => {
   } = useGetProductDetailsQuery(productId);
 
   function addToCartHandler() {
-    console.log("Selected qty =", qty);
+    // console.log("Selected qty =", qty);
     dispatch(addToCart({ ...product, qty }));
     navigate("/cart");
   }
