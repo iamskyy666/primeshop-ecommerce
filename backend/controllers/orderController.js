@@ -25,12 +25,13 @@ const addOrderItems = asyncHandler(async (req, res) => {
         product: o._id,
         _id: undefined,
       })),
-      user: req.user_id,
+      user: req.user._id,
       shippingAddress,
       paymentMethod,
       itemsPrice,
       taxPrice,
       shippingPrice,
+      totalPrice,
     });
     const createdOrder = await order.save();
     res.status(201).json(createdOrder);
@@ -56,10 +57,9 @@ const getOrderById = asyncHandler(async (req, res) => {
 
   if (order) {
     res.status(200).json(order);
-  }else{
-    res.status(404)
-     throw new Error(`Order nit found!`);
-
+  } else {
+    res.status(404);
+    throw new Error(`Order not found!`);
   }
 });
 
