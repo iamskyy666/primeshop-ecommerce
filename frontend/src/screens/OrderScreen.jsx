@@ -7,7 +7,7 @@ import {
 } from "../slices/ordersApiSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { Button, Card, Col, Image, ListGroup, Row } from "react-bootstrap";
+import { Card, Col, Image, ListGroup, Row } from "react-bootstrap";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
