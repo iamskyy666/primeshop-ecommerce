@@ -10,7 +10,7 @@ import Loader from "../../components/Loader";
 import { toast } from "react-toastify";
 
 function ProductListScreen() {
-  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
+  const { data: products, isLoading, refetch } = useGetProductsQuery();
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
 
