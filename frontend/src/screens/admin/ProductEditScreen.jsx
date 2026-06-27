@@ -6,6 +6,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
+  useUploadProductImageMutation,
 } from "../../slices/productsApiSlice";
 import FormContainer from "../../components/FormContainer";
 import { toast } from "react-toastify";
@@ -18,6 +19,7 @@ function ProductEditScreen() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [brand, setBrand] = useState("");
+  const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
@@ -32,6 +34,9 @@ function ProductEditScreen() {
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
 
+  const [uploadProductImage, { isLoading: loadingUpload }] =
+    useUploadProductImageMutation();
+
   const navigate = useNavigate();
   // console.log(product)
 
@@ -43,16 +48,18 @@ function ProductEditScreen() {
       setCategory(product.category);
       setCountInStock(product.countInStock);
       setBrand(product.brand);
+      setImage(product.image);
     }
   }, [product]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-      console.log("Submit clicked");
+    console.log("Submit clicked");
     const updatedProduct = {
       productId,
       name,
       price,
+      image,
       brand,
       category,
       countInStock,
@@ -67,7 +74,19 @@ function ProductEditScreen() {
       toast.success("Product updated!");
       navigate("/admin/product-list");
     }
-    console.log(result)
+    console.log(result);
+  };
+
+  const uploadFileHandler = async (e) => {
+    const formData = new FormData();
+    formData.append("image", e.target.files[0]);
+    try {
+      const res = await uploadProductImage(formData).unwrap();
+      toast.success(res.message);
+      setImage(res.image);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error || "failed to upload image!");
+    }
   };
 
   return (
@@ -100,7 +119,20 @@ function ProductEditScreen() {
                 value={price}
                 onChange={(evt) => setPrice(evt.target.value)}></Form.Control>
             </Form.Group>
-            {/* IMAGE INPUT PLACEHOLDER */}
+            {/* IMAGE INPUT PLACEHOLDER 📸*/}
+            <Form.Group controlId="image" className="my-2">
+              <Form.Label>Image</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter image-url"
+                value={image}
+                onChange={(evt) => setImage(evt.target.value)}></Form.Control>
+              <Form.Control
+                type="file"
+                label="Choose file"
+                onChange={uploadFileHandler}></Form.Control>
+            </Form.Group>
+
             <Form.Group controlId="brand" className="my-2">
               <Form.Label>Brand</Form.Label>
               <Form.Control
