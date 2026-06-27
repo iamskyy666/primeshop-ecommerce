@@ -70,6 +70,7 @@ function ProductEditScreen() {
     if (result.error) {
       console.log(result.error);
       toast.error(result.error);
+      refetch();
     } else {
       toast.success("Product updated!");
       navigate("/admin/product-list");
@@ -85,6 +86,7 @@ function ProductEditScreen() {
       toast.success(res.message);
       setImage(res.image);
     } catch (err) {
+      console.log(err);
       toast.error(err?.data?.message || err.error || "failed to upload image!");
     }
   };
@@ -97,6 +99,7 @@ function ProductEditScreen() {
       <FormContainer>
         <h1>Edit Product</h1>
         {loadingUpdate && <Loader />}
+        {loadingUpload && <Loader />}
         {isLoading ? (
           <Loader />
         ) : error ? (

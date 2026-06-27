@@ -8,7 +8,6 @@ import {
   useDeleteUserMutation,
   useGetUsersQuery,
 } from "../../slices/usersApiSlice";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function UserListScreen() {
