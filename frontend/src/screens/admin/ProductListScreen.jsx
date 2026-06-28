@@ -9,9 +9,12 @@ import {
 } from "../../slices/productsApiSlice";
 import Loader from "../../components/Loader";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import Paginate from "../../components/Paginate";
 
 function ProductListScreen() {
-  const { data: products, isLoading, refetch } = useGetProductsQuery();
+  const { pageNumber } = useParams();
+  const { data, isLoading, refetch } = useGetProductsQuery({ pageNumber });
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
 
@@ -23,7 +26,7 @@ function ProductListScreen() {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
         await deleteProduct(id);
-        toast.success('Product Deleted!')
+        toast.success("Product Deleted!");
         refetch();
       } catch (err) {
         toast.error(err?.data?.message || err.error);
@@ -74,7 +77,7 @@ function ProductListScreen() {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {data.products.map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
@@ -98,6 +101,7 @@ function ProductListScreen() {
               ))}
             </tbody>
           </Table>
+          <Paginate pages={data.pages} page={data.page} isAdmin={true} />
         </>
       )}
     </>
