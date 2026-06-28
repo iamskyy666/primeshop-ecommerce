@@ -37,8 +37,6 @@ const OrderScreen = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  //   console.log("order:", order);
-
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {
       const loadPayPalScript = async () => {
@@ -75,15 +73,6 @@ const OrderScreen = () => {
     });
   }
 
-  // async function onApproveTest() {
-  //   await payOrder({
-  //     orderId,
-  //     details: { payer: {} },
-  //   });
-  //   refetch();
-  //   toast.success("Payment Successful!");
-  // }
-
   function onError(err) {
     toast.error(err?.message);
   }
@@ -118,7 +107,7 @@ const OrderScreen = () => {
   return isLoading ? (
     <Loader />
   ) : error ? (
-    <Message variant="danger" />
+    <Message variant="danger">{error?.data?.message || error.error}</Message>
   ) : (
     <>
       <h1>OrderId: {order._id}</h1>

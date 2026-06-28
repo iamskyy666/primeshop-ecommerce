@@ -8,6 +8,7 @@ import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import SearchBox from "./SearchBox";
+import { resetCart } from "../slices/cartSlice";
 
 export default function Header() {
   const { cartItems } = useSelector((state) => state.cart);
@@ -23,6 +24,7 @@ export default function Header() {
       await logoutApiCall().unwrap();
       dispatch(logout());
       toast.success("Logged-out!");
+      dispatch(resetCart());
       navigate("/login");
     } catch (err) {
       console.log(err);
@@ -45,7 +47,7 @@ export default function Header() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               {/* SEARCH_BOX */}
-              <SearchBox/>
+              <SearchBox />
               <LinkContainer to="/cart">
                 <Nav.Link>
                   <FaShoppingCart /> Cart

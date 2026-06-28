@@ -9,15 +9,21 @@ import {
   updateProduct,
 } from "../controllers/productController.js";
 import { adminMw, protectMw } from "../middlewares/authMiddleware.js";
+import checkObjectId from "../middlewares/checkObjectIdMiddleware.js";
 
 const productRouter = Router();
 
 productRouter.get("/", getAllProducts);
 productRouter.get("/top", getTopProducts);
 productRouter.post("/", protectMw, adminMw, createProduct);
-productRouter.get("/:id", getProductById);
-productRouter.put("/:id", protectMw, adminMw, updateProduct);
-productRouter.delete("/:id", protectMw, adminMw, deleteProduct);
-productRouter.post("/:id/reviews", protectMw, createProductReview);
+productRouter.get("/:id", checkObjectId, getProductById);
+productRouter.put("/:id", protectMw, adminMw, checkObjectId, updateProduct);
+productRouter.delete("/:id", protectMw, adminMw, checkObjectId, deleteProduct);
+productRouter.post(
+  "/:id/reviews",
+  checkObjectId,
+  protectMw,
+  createProductReview,
+);
 
 export default productRouter;

@@ -11,10 +11,11 @@ import Loader from "../../components/Loader";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import Paginate from "../../components/Paginate";
+import Message from "../../components/Message";
 
 function ProductListScreen() {
   const { pageNumber } = useParams();
-  const { data, isLoading, refetch } = useGetProductsQuery({ pageNumber });
+  const { data, isLoading,error, refetch } = useGetProductsQuery({ pageNumber });
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
 
@@ -63,6 +64,10 @@ function ProductListScreen() {
       {loadingDelete && <Loader />}
       {isLoading ? (
         <Loader />
+      ) : error ? (
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
       ) : (
         <>
           <Table striped hover responsive className="table-sm">

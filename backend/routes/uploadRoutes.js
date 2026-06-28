@@ -20,27 +20,39 @@ const storage = multer.diskStorage({
 });
 
 // check file-type - only images allowed
-function checkFileType(file, cb) {
-  const fileTypes = /jpg|jpeg|png/; // regex of what to allow
-  const extname = fileTypes.test(path.extname(file.originalname)).toLowerCase();
+function fileFilter(req, file, cb) {
+  const filetypes = /jpe?g|png|webp/;
+  const mimetypes = /image\/jpe?g|image\/png|image\/webp/;
 
-  const mimetype = fileTypes.test(file.mimetype);
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = mimetypes.test(file.mimetype);
 
   if (extname && mimetype) {
-    return (cb, null);
+    cb(null, true);
   } else {
-    cb("Images only!");
+    cb(new Error("Images only!"), false);
   }
 }
 
 // upload
 const upload = multer({
   storage,
+  fileFilter
 });
+
+const uploadSingleImage = upload.single("image");
 
 // route
-uploadRouter.post("/", upload.single("image"), (req, res) => {
-  res.send({ message: "Image uploaded!", image: `/${req.file.path}` });
-});
+uploadRouter.post("/", (req, res) => {
+  uploadSingleImage(req, res, function (err) {
+    if (err) {
+      res.status(400).send({ message: err.message });
+    }
 
+    res.status(200).send({
+      message: "Image uploaded successfully",
+      image: `/${req.file.path}`,
+    });
+  });
+});
 export default uploadRouter;
