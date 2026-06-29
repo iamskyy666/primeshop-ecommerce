@@ -2,13 +2,13 @@
   "name": "primeshop-ecommerce",
   "version": "1.0.0",
   "description": "eCommerce application built with the MERN stack",
-  "homepage": "https://github.com/iamskyy666/proshop-ecommerce#readme",
+  "homepage": "https://github.com/iamskyy666/primeshop-ecommerce#readme",
   "bugs": {
-    "url": "https://github.com/iamskyy666/proshop-ecommerce/issues"
+    "url": "https://github.com/iamskyy666/primeshop-ecommerce/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iamskyy666/proshop-ecommerce.git"
+    "url": "git+https://github.com/iamskyy666/primeshop-ecommerce.git"
   },
   "license": "ISC",
   "author": "Soumadip Banerjee",
