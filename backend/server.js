@@ -24,10 +24,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 //! 🟢  routes
-app.get("/", (_, res) => {
-  res.send("API is running.. ✅");
-});
-
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
@@ -43,6 +39,22 @@ app.get("/api/config/paypal", (req, res) =>
 // make uploads folder STATIC
 const __dirname = path.resolve(); // curr. directory
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
+// prepare for PRODUCTION 🚀
+if (process.env.NODE_ENV === "production") {
+  // set static folder
+  app.use(express.static(path.join(__dirname, "/frontend/build")));
+
+  // any route that's not api will be redirected to index.html
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+  });
+} else {
+  // react dev-server, when not in PRODUCTION
+  app.get("/", (_, res) => {
+    res.send("API is running.. ✅");
+  });
+}
 
 //! 🟢 error-handlers
 app.use(notFound);
